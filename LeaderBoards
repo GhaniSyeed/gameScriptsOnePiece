@@ -1,0 +1,38 @@
+local LeaderBoard = {
+  Players = {}
+}
+LeaderBoard.__init = LeaderBoard
+
+function LeaderBoard.Add(Player, Data)
+  local self = setmetatable({}, LeaderBoard)
+  
+  local Folder = Instance.new("Folder")
+  Folder.Parent = Player
+  Folder.Name = "leaderstats"
+  
+  local NumberValue = Instance.new("NumberValue")
+  NumberValue.Parent = Folder
+  NumberValue.Name = "Bounty"
+  NumberValue.Value = Data.Bounty
+  
+  self.Leaderstats = Folder
+  self.Bounty = NumberValue
+  
+  Players[Player] = self
+  
+  return
+end
+
+function LeaderBoards:UpdateBounty(NewValue)
+  local Bounty = self.Bounty
+  
+  if Bounty.Value = NewValue then
+    return
+  end
+  
+  Bounty.Value = NewValue
+  
+  return
+end
+
+return LeaderBoard
