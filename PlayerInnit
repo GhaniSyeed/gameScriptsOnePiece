@@ -1,8 +1,8 @@
 -----------------
 --[ Variables ]--
 -----------------
-
 wait()
+
 --// Configuration //--
 local Settings = {
 	StudioVersion = 001,
@@ -16,6 +16,8 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local RunService = game:GetService("RunService")
 
 --// Modules //--
+repeat wait() until _G.ProfileTemplate and _G.ProfileService
+
 local Template = _G.ProfileTemplate
 local ProfileService = _G.ProfileService
 
