@@ -1,4 +1,4 @@
-_G.LeaderBoard = {
+local LeaderBoard = {
   Players = {}
 }
 LeaderBoard.__init = LeaderBoard
@@ -34,3 +34,5 @@ function LeaderBoards:UpdateBounty(NewValue)
   
   return
 end
+
+_G.LeaderBaord = LeaderBoard
