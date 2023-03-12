@@ -1,4 +1,4 @@
-_G.Template = {
+_G.ProfileTemplate = {
   Bounty = 0;
   -- Other
 }
