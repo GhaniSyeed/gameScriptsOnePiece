@@ -2,6 +2,7 @@
 --[ Variables ]--
 -----------------
 
+wait()
 --// Configuration //--
 local Settings = {
 	StudioVersion = 001,
