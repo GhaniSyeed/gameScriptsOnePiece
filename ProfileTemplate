@@ -1,0 +1,4 @@
+_G.Template = {
+  Bounty = 0;
+  -- Other
+}
