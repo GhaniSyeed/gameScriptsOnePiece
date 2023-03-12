@@ -1,0 +1,71 @@
+-----------------
+--[ Variables ]--
+-----------------
+
+--// Configuration //--
+local Settings = {
+	StudioVersion = 001,
+	ProductionVersion = 001,
+	KICK_MESSAGE = "Data issue, try again shortly, If issue persists, contact us"
+}
+
+--// Services //--
+local Players = game:GetService("Players")
+local ServerScriptService = game:GetService("ServerScriptService")
+local RunService = game:GetService("RunService")
+
+--// Modules //--
+local Template = _G.ProfileTemplate
+local ProfileService = _G.ProfileService
+
+--// Directories //--
+local IsStudio = RunService:IsStudio()
+local RunDirectory = (IsStudio and "Testing"..tostring(Settings.StudioVersion)) or "Production"..tostring(Settings.ProductionVersion)
+
+--// Store //--
+local ProfileStore = ProfileService.GetProfileStore(RunDirectory, Template)
+
+--// Setup //--
+_G.Profiles = {}
+
+--// Functions /--
+local function LoadProfile(Player: Player)
+	local profile = ProfileStore:LoadProfileAsync("Player_"..Player.UserId)
+	
+	if not profile then
+		Player:Kick(Settings.KICK_MESSAGE)
+		return
+	end
+	
+	profile:AddUserId(Player.UserId)
+	profile:Reconcile()
+	profile:ListenToRelease(function()
+		_G.Profiles[Player] = nil
+		Player:Kick(Settings.KICK_MESSAGE)
+	end)
+	
+	if Player:IsDescendantOf(Players) then
+		_G.Profiles[Player] = profile
+		
+		--// Leaderstats //--
+		_G.LeaderBoard.Add(Player, profile.Data)
+		
+	else
+		profile:Release()
+	end
+end
+
+local function ReleaseProfile(Player: Player)
+	local profile = _G.Profiles[Player]
+
+	if profile then
+		profile:Release()
+	end
+end
+
+for _, player in pairs(Players:GetPlayers()) do
+	task.spawn(LoadProfile, player)
+end
+
+Players.PlayerAdded:Connect(LoadProfile)
+Players.PlayerRemoving:Connect(ReleaseProfile)
