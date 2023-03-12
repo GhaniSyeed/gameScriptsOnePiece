@@ -174,7 +174,7 @@ end
 ----- Service Table -----
 
 
-_G.ProfileService = {
+local ProfileService = {
 
 	ServiceLocked = false, -- Set to true once the server is shutting down
 
@@ -2212,3 +2212,5 @@ task.spawn(function()
 		UseMockDataStore == false -- Always run this OnClose task if using Roblox API services
 	)
 end)
+
+_G.ProfileService = ProfileService
